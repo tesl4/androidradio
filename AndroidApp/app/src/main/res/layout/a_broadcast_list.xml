@@ -16,14 +16,11 @@
     tools:context="application.radio.tesl4.com.application.ABroadcastList">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        >
+        android:layout_height="wrap_content" >
             <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="Tesl4Player">
-
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="fill_parent"
@@ -31,18 +28,16 @@
                     app:elevation="0.0dip"
                     app:layout_collapseMode="pin"
                     app:title="sex" />
-
-
             </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Receive Stream"
-        android:textAlignment="center"/>
 
 </android.support.design.widget.CoordinatorLayout>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="connect"/>
 
 </LinearLayout>
