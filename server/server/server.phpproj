@@ -24,6 +24,9 @@
     <IncludeDebugInformation>false</IncludeDebugInformation>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CBroadcastItem.php" />
+    <Compile Include="insertbc2db.php" />
+    <Compile Include="manage_db.php" />
     <Compile Include="index.php" />
     <Compile Include="connectdb.php" />
   </ItemGroup>
@@ -33,6 +36,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\tesl4Radio - Web Deploy.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="g_electronic.json" />
+    <Content Include="g_newage.json" />
+    <Content Include="g_metal.json" />
+    <Content Include="g_jazz.json" />
+    <Content Include="g_folk.json" />
+    <Content Include="g_country.json" />
+    <Content Include="g_classic.json" />
+    <Content Include="g_blues.json" />
+    <Content Include="g_alternative.json" />
+    <Content Include="genre.json" />
+    <Content Include="managedb.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\DEVSENSE\PHP Tools\VS$(VisualStudioVersion)\Devsense.PHP.MsWebApplication.targets" />
   <!-- Specify pre- and post-build commands in the BeforeBuild and 

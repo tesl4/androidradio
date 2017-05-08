@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    Select *.pls files : <input type="file" id="pls" accept=".pls" onchange="onLoadPls()" multiple>
+    <select id="genre" onchange="selectGenre()"></select>
+    <select id="genre_sub"></select>
+    <button id="doinsert" onclick="">db에 저장하기</button>
+
+    <!--<form action="onLoadPls()" method="post" enctype="multipart/form-data">
+        <input type="submit">
+    </form>-->
+
+    
+    <form name="bcform" id="bcform" method="post">
+        <table id="table" style="border-bottom-width : 2px;">
+            <thead>
+                <tr>
+                    <th scope="col" style="width: 40%">title</th>
+                    <th scope="col" style="width: 40%">address</th>
+                    <th scope="col" style="width: 20%">action</th>
+                </tr>
+            </thead>
+        </table>
+    </form>
+    
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="lib/jquery.tabletojson.js"></script>
+    <script src="lib/jquery.tabletojson.min.js"></script>
+    <script>
+
+       
+
+        var table = document.getElementById("table");
+        var select = document.getElementById("genre");
+        var select_sub = document.getElementById("genre_sub");
+        select.onload = setGenre();
+        var doinsert = document.getElementById("doinsert");
+        
+
+        $('#doinsert').click(function () {
+            var dat = $("#table").tableToJSON(); 
+            dat = "dat=" + JSON.stringify(dat) + "&genre=" + select.value + "&genre_sub=" + select_sub;
+
+            $.ajax({
+                url: "insertbc2db.php",
+                type: "post",
+                data: dat,
+                success: onSuccess
+            });
+        });
+
+        function onSuccess(data) {
+            alert(data);
+        }
+        function onError(data, status) { alert("error"); }
+
+
+
+        function selectGenre()
+        {
+            var sel = document.getElementById("genre_sub")
+            while (sel.length != 0) { sel.remove(0); }
+
+
+            var targetname;
+            console.log("select - "+select.value);
+            switch(select.value)
+            {
+                case "Various": targetname = "na";                      break;
+                case "Alternative": targetname = "g_alternative.json"; break;
+                case "Blues": targetname = "g_blues.json";              break;
+                case "Classical": targetname = "g_classic.json";        break;
+                case "Country": targetname = "g_country.json"; break;
+                case "Jazz": targetname = "g_jazz.json";                break;
+                case "Metal": targetname = "g_metal.json";              break;
+                case "New Age": targetname = "g_newage.json";           break;
+                default:        targetname = "na";           break;
+            }
+            if(targetname != "na")
+            {
+                $.getJSON(targetname, function (json) {
+                    var i = 1;
+                    while (i < json.length) {
+                        var option = document.createElement("option");
+                        option.text = json[i];
+                        sel.add(option);
+                        i++;
+                    }
+                });
+            }
+        };
+
+        function setGenre()
+        {
+            $.getJSON("genre.json", function (json) {
+                var sel = document.getElementById("genre")
+                var i =0;
+                while(i < json.length)
+                {
+                    var option = document.createElement("option");
+                    option.text = json[i];
+                    sel.add(option);
+                    i++;
+                }
+
+            }); 
+        }
+
+        function onLoadPls()
+        {
+            var k_bcsize = "numberofentries";
+            var k_title = "Title";
+            var k_file = "File";
+
+            var input = document.getElementById("pls");
+            var i = 1;
+
+            $('#table tbody').remove();
+            var body = table.createTBody();
+
+            //while (table.rows.length.valueOf() > (1).valueOf())
+            //{
+            //    table.deleteRow(1);
+            //}
+            
+            i = 0;
+            while( i < input.files.length)
+            {
+                var file = input.files[i];
+                if (typeof (file) != "undefined")
+                {
+                    var freader = new FileReader();
+
+                    freader.onload = function (e) {
+                        var fcontent = e.target.result.toString();
+                        var flines = fcontent.split('\n');
+                        var fhash = new Object();
+                        var table = document.getElementById("table");
+                        table.style.border = "thin solid #000000";
+                        for (var i = 1; i < flines.length; i++) {
+                            var split = flines[i].split("=");
+                            fhash[split[0]] = split[1];
+                        }
+                        var i = 0;
+
+                        
+                        while (i < fhash[k_bcsize]) {
+                            label = parseInt(i) + 1;
+                            
+                            var row = table.insertRow(1);
+                            var title = row.insertCell(0);
+                            var addr = row.insertCell(1);
+
+                            title.setAttribute("name", "title");
+
+                            title.innerHTML = "<input style=\"width: 99.25%\" type=\"text\" value=" + "\"" + fhash[k_title + label.toString()] + "\"" + ">" + "</textarea>";
+
+                            addr.setAttribute("name", "addr");
+                            addr.innerHTML = fhash[k_file + label.toString()];
+
+                            i++;
+                        }
+                    };
+                    freader.readAsText(file);
+                }
+                i++;
+            }
+        }
+
+
+    </script>
+
+</body>
+</html>

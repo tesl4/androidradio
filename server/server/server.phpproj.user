@@ -2,7 +2,8 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <NameOfLastUsedPublishProfile>tesl4Radio - Web Deploy</NameOfLastUsedPublishProfile>
-    <StartAction>CurrentPage</StartAction>
+    <StartAction>SpecificPage</StartAction>
     <RuntimePath>C:\Program Files (x86)\IIS Express\PHP\v7.0\php.exe</RuntimePath>
+    <SpecificPageValue>managedb.html</SpecificPageValue>
   </PropertyGroup>
 </Project>
