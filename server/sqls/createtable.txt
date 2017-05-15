@@ -1,0 +1,8 @@
+CREATE TABLE `bc_list`.`bc_list` (
+ `uid` INT NOT NULL AUTO_INCREMENT 
+, `bc_title` VARCHAR(255) NOT NULL 
+, `bc_addr` VARCHAR(255) NOT NULL 
+, `bc_genre` VARCHAR(45) NOT NULL 
+, `bc_genre_sub` VARCHAR(45) NOT NULL 
+, `thumbnail_addr` VARCHAR(255) NOT NULL 
+, PRIMARY KEY (`uid`)) ENGINE = InnoDB;
